@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#7467ff"><link rel="manifest" href="manifest.json">
+<title>MRSM OneHub</title>
+<style>
+:root{--p:#7167ff;--p2:#a56bff;--pink:#ff62c6;--cyan:#54e8ff;--bg:#f5f7ff;--ink:#171d35;--muted:#737d93;--line:#e6e9f2}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 0 0,#dce6ff,transparent 30%),radial-gradient(circle at 100% 100%,#ffd9f3,transparent 32%),var(--bg);font-family:Inter,system-ui,Arial;color:var(--ink)}
+button,input,select,textarea{font:inherit}.shell{max-width:480px;margin:auto;min-height:100vh;background:#ffffffb8;backdrop-filter:blur(16px);box-shadow:0 0 45px #5564a52a}.top{height:72px;display:flex;align-items:center;padding:0 18px;position:sticky;top:0;z-index:5;background:#ffffffd9;backdrop-filter:blur(15px);border-bottom:1px solid #fff}.logo{font-weight:1000;letter-spacing:1px}.logo em{color:var(--p);font-style:normal}.year{margin-left:auto;background:#eef0ff;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:900}
+.lang{margin-left:7px;border:1px solid #d9dcff;background:#fff;border-radius:999px;padding:7px 9px;font-size:11px;font-weight:900;color:#5d54d8}
+main{padding:17px 17px 96px}.screen{display:none}.screen.active{display:block}.hero{padding:20px;border-radius:24px;background:linear-gradient(135deg,var(--p),var(--p2) 52%,var(--pink));color:#fff;box-shadow:0 15px 35px #756bff3d}.hero h1{font-size:25px;margin:0 0 5px}.hero p{margin:0;opacity:.9;font-size:13px}.search{width:100%;margin:14px 0;padding:14px;border:1px solid var(--line);border-radius:15px;background:#fff;outline:none}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat,.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:15px;margin-top:11px;box-shadow:0 7px 22px #525d7c0d}.stat b{font-size:24px;display:block}.muted{font-size:12px;color:var(--muted)}.row{display:flex;justify-content:space-between;align-items:center;gap:8px}.badge{font-size:10px;font-weight:900;border-radius:999px;padding:5px 8px;background:#e8faff;color:#087b9c}.badge.pink{background:#fff0fa;color:#bf3d90}.badge.yellow{background:#fff6d8;color:#916b00}.badge.green{background:#eaf9ef;color:#267c48}.item{padding:13px 0;border-bottom:1px solid #eef0f5}.item:last-child{border-bottom:0}.btn{border:0;border-radius:12px;padding:10px 12px;background:var(--p);color:white;font-weight:800}.btn.ghost{background:#edf0ff;color:#5e54d6}.btn.danger{background:#ef5d75}.nav{position:fixed;bottom:0;width:100%;max-width:480px;height:78px;display:flex;background:#ffffffed;backdrop-filter:blur(18px);border-top:1px solid var(--line);z-index:20}.nav button{flex:1;border:0;background:transparent;color:#7d879b;font-size:10px;font-weight:800}.nav button.active{color:var(--p)}.nav span{display:block;font-size:21px;margin-bottom:3px}.title{font-size:26px;font-weight:1000;margin:3px 0 15px}.chips{display:flex;gap:8px;overflow:auto}.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;white-space:nowrap;font-size:12px}.chip.active{background:#e9ebff;color:#5c53d9;border-color:#bbb7ff}.form{display:grid;gap:10px}.form input,.form select,.form textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff}.actions{display:flex;gap:8px;margin-top:10px}.actions>*{flex:1}.task.done{opacity:.55}.task.done h3{text-decoration:line-through}.empty{text-align:center;padding:28px;color:var(--muted)}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.cal{padding:9px 2px;text-align:center;border-radius:9px;font-size:12px}.cal.head{color:#8992a4;font-weight:800}.cal.today{background:var(--p);color:white;font-weight:900}.event{border-left:4px solid var(--p);padding-left:11px;margin:11px 0}.chat{min-height:55vh}.bubble{max-width:87%;padding:12px 14px;border-radius:15px;margin:8px 0;font-size:13px}.bubble.bot{background:#eef0ff}.bubble.me{margin-left:auto;background:var(--p);color:#fff}.chatbar{display:flex;gap:7px;position:sticky;bottom:80px;background:var(--bg);padding:9px 0}.chatbar input{flex:1;padding:12px;border:1px solid var(--line);border-radius:12px}.profile{text-align:center}.avatar{width:90px;height:90px;margin:12px auto;border-radius:50%;display:grid;place-items:center;font-size:42px;background:linear-gradient(135deg,#dce7ff,#fbdaf0)}.setting{display:flex;justify-content:space-between;padding:15px 0;border-bottom:1px solid var(--line)}
+dialog{border:0;border-radius:22px;padding:0;width:min(420px,92vw);box-shadow:0 25px 80px #1d244566}dialog::backdrop{background:#1b214799}.modal{padding:20px}.modal h2{margin-top:0}
+</style></head>
+<body><div class="shell">
+<header class="top"><span class="logo">✦ MRSM <em>ONEHUB</em></span><span class="year" id="year"></span><select class="lang" id="language" aria-label="Language" onchange="setLanguage(this.value)"><option value="en">EN</option><option value="ms">BM</option></select></header>
+<main>
+<section id="home" class="screen active"><div class="hero"><h1>Hey, Ayra! ✨</h1><p id="todayText">Your academic life, all in one place.</p></div>
+<input class="search" id="search" placeholder="🔎 Search assignments, events or announcements..." oninput="renderHome()">
+<div class="grid"><div class="stat"><b id="activeCount">0</b><span class="muted">Active assignments</span></div><div class="stat"><b id="announcementCount">0</b><span class="muted">Announcements</span></div></div>
+<div class="card"><div class="row"><h3>📢 Smart Announcements</h3><span class="badge">LIVE</span></div><div id="homeAnnouncements"></div></div>
+<div class="card"><div class="row"><h3>📚 Assignment Tracker</h3><button class="btn ghost" onclick="go('tasks')">View all</button></div><div id="homeTasks"></div></div>
+<div class="card"><h3>⏰ Smart Reminders</h3><div id="reminders"></div></div>
+</section>
+
+<section id="tasks" class="screen"><div class="title">Assignment Tracker</div><div class="chips"><button class="chip active" onclick="setFilter('all',this)">All</button><button class="chip" onclick="setFilter('active',this)">Active</button><button class="chip" onclick="setFilter('done',this)">Done</button></div>
+<div class="card"><button class="btn" onclick="openTask()">＋ Add Assignment</button></div><div id="taskList"></div></section>
+
+<section id="calendar" class="screen"><div class="title">Academic Calendar</div><div class="card"><div class="row"><h3 id="monthTitle"></h3><span class="badge">AUTO YEAR</span></div><div class="calendar" id="cal"></div></div><div class="card"><h3>Upcoming Events</h3><div id="events"></div></div></section>
+
+<section id="ai" class="screen"><div class="title">AI Priority Assistant</div><div class="chat" id="chat"><div class="bubble bot">Hi! I can help organise your academic workload. Try asking “What should I do first?”</div></div><div class="chatbar"><input id="chatInput" placeholder="Ask your academic assistant..." onkeydown="if(event.key==='Enter')sendAI()"><button class="btn" onclick="sendAI()">➤</button></div></section>
+
+<section id="profile" class="screen"><div class="title" data-i18n="My Profile">My Profile</div>
+<div class="profile"><div class="avatar" id="profileAvatar">👩🏻‍🎓</div><h2 id="profileName">AYRA FARISYA</h2><p class="muted" id="profileSummary">Form 4 · MRSM</p><button class="btn" onclick="openAccount()" data-i18n="Edit Profile">Edit Profile</button></div>
+<div class="card"><div class="setting"><b>👤 <span data-i18n="Account information">Account information</span></b><button class="btn ghost" onclick="openAccount()" data-i18n="Edit">Edit</button></div>
+<div class="setting"><b>🌐 <span data-i18n="Language">Language</span></b><select id="profileLang" onchange="setLanguage(this.value)" style="border:1px solid #e1e5ef;border-radius:10px;padding:7px"><option value="en">English</option><option value="ms">Bahasa Melayu</option></select></div>
+<div class="setting"><b>🔔 <span data-i18n="Notifications">Notifications</span></b><button class="btn ghost" id="notifBtn" onclick="toggleNotifications()">On</button></div>
+<div class="setting"><b>📆 <span data-i18n="Current academic year">Current academic year</span></b><span id="academicYear"></span></div></div>
+<div class="card"><h3 data-i18n="Data">Data</h3><p class="muted" data-i18n="Your prototype data is stored on this device.">Your prototype data is stored on this device.</p><div class="actions"><button class="btn ghost" onclick="exportData()" data-i18n="Export">Export</button><button class="btn danger" onclick="resetData()" data-i18n="Reset demo data">Reset demo data</button></div></div></section>
+</main>
+<nav class="nav"><button class="active" onclick="go('home',this)"><span>⌂</span>Home</button><button onclick="go('tasks',this)"><span>✓</span>Tasks</button><button onclick="go('calendar',this)"><span>▣</span>Calendar</button><button onclick="go('ai',this)"><span>✦</span>AI</button><button onclick="go('profile',this)"><span>♙</span>Profile</button></nav>
+</div>
+
+
+<dialog id="accountDialog"><div class="modal"><h2 id="accountTitle">Edit Profile</h2>
+<div class="form">
+<input id="accName" placeholder="Full name">
+<input id="accStudentId" placeholder="Student ID">
+<input id="accCampus" placeholder="MRSM / Campus">
+<input id="accForm" placeholder="Form / Year">
+<input id="accEmail" type="email" placeholder="Email">
+<input id="accPhone" type="tel" placeholder="Phone number">
+</div>
+<div class="actions"><button class="btn ghost" onclick="accountDialog.close()">Cancel</button><button class="btn" onclick="saveAccount()">Save Changes</button></div>
+</div></dialog>
+<dialog id="taskDialog"><div class="modal"><h2>Add Assignment</h2><div class="form"><input id="taskTitle" placeholder="Subject / assignment title"><input id="taskDue" type="date"><select id="taskPriority"><option>Normal</option><option>High</option><option>Urgent</option></select></div><div class="actions"><button class="btn ghost" onclick="taskDialog.close()">Cancel</button><button class="btn" onclick="saveTask()">Save</button></div></div></dialog>
+
+<script>
+
+const LANG_KEY='mrsm-onehub-language';
+let lang=localStorage.getItem(LANG_KEY)||'en';
+
+const I18N={
+en:{
+"Hey, Ayra! ✨":"Hey, Ayra! ✨","Your academic life, all in one place.":"Your academic life, all in one place.",
+"Search assignments, events or announcements...":"Search assignments, events or announcements...",
+"Active assignments":"Active assignments","Announcements":"Announcements","Smart Announcements":"Smart Announcements",
+"Assignment Tracker":"Assignment Tracker","View all":"View all","Smart Reminders":"Smart Reminders",
+"Academic Calendar":"Academic Calendar","Upcoming Events":"Upcoming Events","AI Priority Assistant":"AI Priority Assistant",
+"My Profile":"My Profile","Account information":"Account information","Notifications":"Notifications",
+"Current academic year":"Current academic year","Data":"Data","Your prototype data is stored on this device.":"Your prototype data is stored on this device.",
+"Export":"Export","Reset demo data":"Reset demo data","Add Assignment":"Add Assignment","All":"All","Active":"Active","Done":"Done",
+"Cancel":"Cancel","Save":"Save","Subject / assignment title":"Subject / assignment title","Normal":"Normal","High":"High","Urgent":"Urgent",
+"Mark done":"Mark done","Mark active":"Mark active","Delete":"Delete","No assignments in this filter.":"No assignments in this filter.",
+"No matching tasks.":"No matching tasks.","You are all caught up 🎉":"You are all caught up 🎉",
+"AI Priority Assistant":"AI Priority Assistant","Home":"Home","Tasks":"Tasks","Calendar":"Calendar","AI":"AI","Profile":"Profile",
+"Due":"Due","priority":"priority","days":"days","TODAY":"TODAY","LIVE":"LIVE","AUTO YEAR":"AUTO YEAR",
+"Your academic life, all in one place.":"Your academic life, all in one place.",
+"Academic Week":"Academic Week","Student Representative Meeting":"Student Representative Meeting",
+"Additional Mathematics — Chapter 4":"Additional Mathematics — Chapter 4",
+"Chemistry — Laboratory Report":"Chemistry — Laboratory Report","History — Chapter 3 Notes":"History — Chapter 3 Notes",
+"Thursday · 8:00 PM":"Thursday · 8:00 PM","Main Hall · Saturday":"Main Hall · Saturday",
+"Hi! I can help organise your academic workload. Try asking “What should I do first?”":"Hi! I can help organise your academic workload. Try asking “What should I do first?”",
+"Ask your academic assistant...":"Ask your academic assistant...","Edit Profile":"Edit Profile","Edit":"Edit","Language":"Language","Save Changes":"Save Changes","Full name":"Full name","Student ID":"Student ID","MRSM / Campus":"MRSM / Campus","Form / Year":"Form / Year","Phone number":"Phone number","Notifications":"Notifications"
+},
+ms:{
+"Hey, Ayra! ✨":"Hai, Ayra! ✨","Your academic life, all in one place.":"Semua urusan akademik anda, di satu tempat.",
+"Search assignments, events or announcements...":"Cari tugasan, acara atau pengumuman...",
+"Active assignments":"Tugasan aktif","Announcements":"Pengumuman","Smart Announcements":"Pengumuman Pintar",
+"Assignment Tracker":"Pengurus Tugasan","View all":"Lihat semua","Smart Reminders":"Peringatan Pintar",
+"Academic Calendar":"Kalendar Akademik","Upcoming Events":"Acara Akan Datang","AI Priority Assistant":"Pembantu Keutamaan AI",
+"My Profile":"Profil Saya","Account information":"Maklumat akaun","Notifications":"Notifikasi",
+"Current academic year":"Tahun akademik semasa","Data":"Data","Your prototype data is stored on this device.":"Data aplikasi ini disimpan pada peranti anda.",
+"Export":"Eksport","Reset demo data":"Tetapkan semula data demo","Add Assignment":"Tambah Tugasan","All":"Semua","Active":"Aktif","Done":"Selesai",
+"Cancel":"Batal","Save":"Simpan","Subject / assignment title":"Subjek / tajuk tugasan","Normal":"Biasa","High":"Tinggi","Urgent":"Segera",
+"Mark done":"Tanda selesai","Mark active":"Tanda aktif","Delete":"Padam","No assignments in this filter.":"Tiada tugasan dalam penapis ini.",
+"No matching tasks.":"Tiada tugasan yang sepadan.","You are all caught up 🎉":"Semua tugasan sudah selesai 🎉",
+"Home":"Utama","Tasks":"Tugasan","Calendar":"Kalendar","AI":"AI","Profile":"Profil",
+"Due":"Tarikh akhir","priority":"keutamaan","days":"hari","TODAY":"HARI INI","LIVE":"AKTIF","AUTO YEAR":"TAHUN AUTO",
+"Academic Week":"Minggu Akademik","Student Representative Meeting":"Mesyuarat Badan Wakil Pelajar",
+"Additional Mathematics — Chapter 4":"Matematik Tambahan — Bab 4",
+"Chemistry — Laboratory Report":"Kimia — Laporan Makmal","History — Chapter 3 Notes":"Sejarah — Nota Bab 3",
+"Thursday · 8:00 PM":"Khamis · 8:00 malam","Main Hall · Saturday":"Dewan Utama · Sabtu",
+"Hi! I can help organise your academic workload. Try asking “What should I do first?”":"Hai! Saya boleh membantu mengurus tugasan akademik anda. Cuba tanya “Apa yang perlu saya buat dahulu?”",
+"Ask your academic assistant...":"Tanya pembantu akademik anda...","Edit Profile":"Edit Profil","Edit":"Edit","Language":"Bahasa","Save Changes":"Simpan Perubahan","Full name":"Nama penuh","Student ID":"ID Pelajar","MRSM / Campus":"MRSM / Kampus","Form / Year":"Tingkatan / Tahun","Phone number":"Nombor telefon","Notifications":"Notifikasi"
+}
+};
+
+function tr(text){
+  if(!text) return text;
+  const dict=I18N[lang];
+  if(dict[text]) return dict[text];
+  let result=text;
+  const en=I18N.en, ms=I18N.ms;
+  for(const key of Object.keys(en)){
+    if(en[key]!==ms[key] && result.includes(en[key])) result=result.split(en[key]).join(dict[key]||en[key]);
+  }
+  return result;
+}
+function translatePage(){
+  document.querySelectorAll('body *').forEach(el=>{
+    if(el.children.length===0 && el.childNodes.length===1 && el.firstChild.nodeType===3){
+      el.textContent=tr(el.textContent);
+    }
+  });
+  document.querySelectorAll('input[placeholder], textarea[placeholder]').forEach(el=>{
+    const original=el.getAttribute('data-i18n-placeholder')||el.placeholder;
+    el.setAttribute('data-i18n-placeholder',original);
+    el.placeholder=tr(original);
+  });
+  document.querySelectorAll('button').forEach(b=>{
+    if(b.children.length===0 && b.textContent.trim()) b.textContent=tr(b.textContent.trim());
+  });
+  document.getElementById('profileLang') && (document.getElementById('profileLang').value=lang);
+const placeholders={en:{'Full name':'Full name','Student ID':'Student ID','MRSM / Campus':'MRSM / Campus','Form / Year':'Form / Year','Email':'Email','Phone number':'Phone number'},ms:{'Full name':'Nama penuh','Student ID':'ID Pelajar','MRSM / Campus':'MRSM / Kampus','Form / Year':'Tingkatan / Tahun','Email':'E-mel','Phone number':'Nombor telefon'}};
+['accName','accStudentId','accCampus','accForm','accEmail','accPhone'].forEach((id,i)=>{let el=document.getElementById(id);if(el){let keys=['Full name','Student ID','MRSM / Campus','Form / Year','Email','Phone number'];el.placeholder=placeholders[lang][keys[i]]}});
+document.documentElement.lang=lang==='ms'?'ms':'en';
+  document.getElementById('language').value=lang;
+}
+function setLanguage(value){
+  lang=value==='ms'?'ms':'en';
+  localStorage.setItem(LANG_KEY,lang);
+  renderAll();
+  translatePage();
+}
+
+const KEY='mrsm-onehub-v2';
+const CURRENT_YEAR=new Date().getFullYear();
+let data=JSON.parse(localStorage.getItem(KEY)||'null');
+if(!data||data.year!==CURRENT_YEAR){data={year:CURRENT_YEAR,profile:{name:'AYRA FARISYA',studentId:'',campus:'MRSM',form:'Form 4',email:'',phone:''},notifications:true,tasks:[
+{id:1,title:'Additional Mathematics — Chapter 4',due:iso(1),priority:'Urgent',done:false},
+{id:2,title:'Chemistry — Laboratory Report',due:iso(4),priority:'High',done:false},
+{id:3,title:'History — Chapter 3 Notes',due:iso(-2),priority:'Normal',done:true}],announcements:[
+{title:'Student Representative Meeting',date:'Thursday · 8:00 PM'},
+{title:'Academic Week',date:'Main Hall · Saturday'}],events:[
+{title:'Additional Mathematics deadline',date:iso(1)},
+{title:'Chemistry test',date:iso(4)}]};save()}
+data.profile=data.profile||{name:'AYRA FARISYA'};
+data.profile.studentId=data.profile.studentId||'';
+data.profile.campus=data.profile.campus||'MRSM';
+data.profile.form=data.profile.form||'Form 4';
+data.profile.email=data.profile.email||'';
+data.profile.phone=data.profile.phone||'';
+if(typeof data.notifications!=='boolean')data.notifications=true;
+save();
+
+let filter='all';
+function iso(offset){let d=new Date();d.setDate(d.getDate()+offset);return d.toISOString().slice(0,10)}
+function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+function fmt(d){return new Date(d+'T00:00:00').toLocaleDateString(lang==='ms'?'ms-MY':'en-MY',{day:'numeric',month:'short',year:'numeric'})}
+function daysLeft(d){return Math.ceil((new Date(d+'T23:59:59')-new Date())/86400000)}
+function go(id,b){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));if(b)b.classList.add('active');scrollTo(0,0);renderAll()}
+function setFilter(f,b){filter=f;document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderTasks()}
+function renderAll(){document.getElementById('year').textContent=CURRENT_YEAR;document.getElementById('academicYear').textContent=CURRENT_YEAR;document.getElementById('profileName').textContent=data.profile.name;document.getElementById('profileSummary').textContent=`${data.profile.form} · ${data.profile.campus}`;document.getElementById('notifBtn').textContent=data.notifications?(lang==='ms'?'Hidup':'On'):(lang==='ms'?'Mati':'Off');document.getElementById('profileLang').value=lang;document.getElementById('todayText').textContent=new Date().toLocaleDateString(lang==='ms'?'ms-MY':'en-MY',{weekday:'long',day:'numeric',month:'long',year:'numeric'});renderHome();renderTasks();renderCalendar()}
+function renderHome(){let q=(document.getElementById('search')?.value||'').toLowerCase();let tasks=data.tasks.filter(t=>!t.done);document.getElementById('activeCount').textContent=tasks.length;document.getElementById('announcementCount').textContent=data.announcements.length;
+document.getElementById('homeAnnouncements').innerHTML=data.announcements.map(a=>`<div class="item"><b>${a.title}</b><br><span class="muted">${a.date}</span></div>`).join('');
+let shown=tasks.filter(t=>t.title.toLowerCase().includes(q)).slice(0,3);document.getElementById('homeTasks').innerHTML=shown.map(taskHTML).join('')||'<div class="empty">No matching tasks.</div>';
+document.getElementById('reminders').innerHTML=tasks.slice().sort((a,b)=>a.due.localeCompare(b.due)).slice(0,3).map(t=>`<div class="item"><div class="row"><span>${t.title}</span><span class="badge ${daysLeft(t.due)<=1?'pink':'yellow'}">${daysLeft(t.due)<=0?'TODAY':daysLeft(t.due)+' DAY'+(daysLeft(t.due)==1?'':'S')}</span></div></div>`).join('')||'<div class="empty">You are all caught up 🎉</div>'}
+function taskHTML(t){let dl=daysLeft(t.due);let badge=dl<=1?'pink':t.priority==='High'?'yellow':'green';return `<div class="card task ${t.done?'done':''}"><div class="row"><h3>${t.title}</h3><span class="badge ${badge}">${t.done?'DONE':dl<=0?'TODAY':dl+' DAYS'}</span></div><p class="muted">Due ${fmt(t.due)} · ${t.priority} priority</p><div class="actions"><button class="btn" onclick="toggleTask(${t.id})">${t.done?'Mark active':'Mark done'}</button><button class="btn danger" onclick="deleteTask(${t.id})">Delete</button></div></div>`}
+function renderTasks(){let a=data.tasks.filter(t=>filter==='all'||(filter==='active'&&!t.done)||(filter==='done'&&t.done));document.getElementById('taskList').innerHTML=a.map(taskHTML).join('')||'<div class="empty">No assignments in this filter.</div>'}
+function toggleTask(id){let t=data.tasks.find(x=>x.id===id);t.done=!t.done;save();renderAll()}
+function deleteTask(id){data.tasks=data.tasks.filter(x=>x.id!==id);save();renderAll()}
+function openTask(){taskDialog.showModal();document.getElementById('taskDue').value=iso(3)}
+function saveTask(){let title=document.getElementById('taskTitle').value.trim(),due=document.getElementById('taskDue').value,priority=document.getElementById('taskPriority').value;if(!title||!due)return;data.tasks.push({id:Date.now(),title,due,priority,done:false});save();taskDialog.close();document.getElementById('taskTitle').value='';renderAll()}
+function renderCalendar(){let now=new Date(),y=now.getFullYear(),m=now.getMonth();document.getElementById('monthTitle').textContent=now.toLocaleDateString(undefined,{month:'long',year:'numeric'});let first=new Date(y,m,1).getDay();first=(first+6)%7;let n=new Date(y,m+1,0).getDate();let h=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(x=>`<div class="cal head">${x}</div>`).join('');for(let i=0;i<first;i++)h+='<div></div>';for(let d=1;d<=n;d++){let cls=d===now.getDate()?'cal today':'cal';h+=`<div class="${cls}">${d}</div>`}document.getElementById('cal').innerHTML=h;document.getElementById('events').innerHTML=data.events.map(e=>`<div class="event"><b>${e.title}</b><br><span class="muted">${fmt(e.date)}</span></div>`).join('')}
+
+function openAccount(){
+  document.getElementById('accName').value=data.profile.name||'';
+  document.getElementById('accStudentId').value=data.profile.studentId||'';
+  document.getElementById('accCampus').value=data.profile.campus||'';
+  document.getElementById('accForm').value=data.profile.form||'';
+  document.getElementById('accEmail').value=data.profile.email||'';
+  document.getElementById('accPhone').value=data.profile.phone||'';
+  accountDialog.showModal();
+}
+function saveAccount(){
+  const name=document.getElementById('accName').value.trim();
+  if(!name){alert(lang==='ms'?'Sila masukkan nama penuh.':'Please enter your full name.');return}
+  data.profile.name=name;
+  data.profile.studentId=document.getElementById('accStudentId').value.trim();
+  data.profile.campus=document.getElementById('accCampus').value.trim()||'MRSM';
+  data.profile.form=document.getElementById('accForm').value.trim()||'Form 4';
+  data.profile.email=document.getElementById('accEmail').value.trim();
+  data.profile.phone=document.getElementById('accPhone').value.trim();
+  save();accountDialog.close();renderAll();translatePage();
+}
+function toggleNotifications(){
+  data.notifications=!data.notifications;save();renderAll();translatePage();
+}
+
+function sendAI(){let input=document.getElementById('chatInput'),v=input.value.trim();if(!v)return;let c=document.getElementById('chat');c.insertAdjacentHTML('beforeend',`<div class="bubble me">${v}</div>`);input.value='';let active=data.tasks.filter(t=>!t.done).sort((a,b)=>a.due.localeCompare(b.due));let reply=active.length?(lang==='ms'?`Saya cadangkan anda utamakan <b>${active[0].title}</b> kerana tarikh akhirnya paling hampir (${fmt(active[0].due)}). Selepas itu, teruskan dengan <b>${active[1]?.title||'tugasan aktif seterusnya'}</b>.`:`I would prioritise <b>${active[0].title}</b> because it has the nearest deadline (${fmt(active[0].due)}). After that, move to <b>${active[1]?.title||'your next active task'}</b>.`):(lang==='ms'?'Semua tugasan sudah selesai! 🎉':'You are all caught up! 🎉');setTimeout(()=>c.insertAdjacentHTML('beforeend',`<div class="bubble bot">${reply}</div>`),350)}
+function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`mrsm-onehub-${CURRENT_YEAR}.json`;a.click();URL.revokeObjectURL(a.href)}
+function resetData(){if(confirm('Reset all demo data for this device?')){localStorage.removeItem(KEY);location.reload()}}
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
+renderAll();
+translatePage();
+</script></body></html>
